@@ -22,4 +22,6 @@ Funcionalidade: Testes basicos no google
     Cenarios: 
       | browser | pesquisa |
       | firefox | Thiago   |
+      | firefox | Livia    |
       | chrome  | Amanda   |
+      | chrome  | Arthur   |
