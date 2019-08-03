@@ -1,9 +1,18 @@
 package steps.com.br;
 
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import config.com.br.hooks;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.it.Quando;
 import cucumber.api.java.pt.Dado;
+import cucumber.api.java.pt.E;
 import cucumber.api.java.pt.Entao;
 import pages.com.br.GooglePage;
 
@@ -12,20 +21,41 @@ public class GoogleSteps {
 	private WebDriver driver;
 	protected GooglePage page;
 	
-	public GoogleSteps() {
-		driver = hooks.GetDriver();
-		page = new GooglePage(driver);
+	@After
+	public void FechaBrowser(Scenario scenario) {
+		if(!scenario.isFailed()) {
+			scenario.write("Cenario Passou");
+		}
+		else
+		{
+			scenario.write("Cenario Falhou");
+		}
+		
+		scenario.embed(((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES), "image/png");
+		
+		driver.quit();
 	}
 	
-	@Dado("^que acesso a url \"([^\"]*)\"$")
-	public void que_acesso_a_url(String url) throws Throwable {
-		System.out.println("E que acesso a url " + url);
-		driver.navigate().to(url);
+	@Dado("^que acesso o google pelo \"([^\"]*)\"$")
+	public void que_acesso_o_google_pelo(String browser) throws Throwable {
+		System.out.println("Dado que acesso o google pelo " + browser);
+		
+		if(browser.equals("chrome")) {
+			driver = new ChromeDriver();
+		}
+		else if(browser.equals("firefox")) {
+			driver = new FirefoxDriver();
+		}
+		
+		page = new GooglePage(driver);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		driver.get("http://google.com.br");
 	}
 
-	@Dado("^que digito o valor \"([^\"]*)\"$")
+	@E("^que digito o valor \"([^\"]*)\"$")
 	public void que_digito_o_valor(String value) throws Throwable {
-		System.out.println("digito o valor " + value);
+		System.out.println("E digito o valor " + value);
 		page.txtSearch.sendKeys(value);
 	}
 

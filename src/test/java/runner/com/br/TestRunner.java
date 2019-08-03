@@ -10,7 +10,7 @@ import cucumber.api.junit.Cucumber;
 		features = {"src/test/resources/features"},
 		plugin = {"pretty", "html:target/cucumber-html-report", "json:target/cucumber-json-report/cucumber.json"},
 		glue = {""},
-		tags = {"@google"}
+		tags = {"~@smoketest","@regression"}
 		)
 public class TestRunner {
 

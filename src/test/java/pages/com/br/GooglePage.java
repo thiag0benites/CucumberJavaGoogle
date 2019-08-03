@@ -10,12 +10,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class GooglePage {
+public class GooglePage{
 	
-	private WebDriver driver;
+	protected WebDriverWait wait;
 	
 	public GooglePage(WebDriver driver) {
-		this.driver = driver;
+		wait = new WebDriverWait(driver, 10);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -32,7 +32,6 @@ public class GooglePage {
 	public List<WebElement> listResult;
 	
 	public void CheckResult() {
-		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.elementToBeClickable(listResult.get(1)));
 
 		int noticias = listResult.size();

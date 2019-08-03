@@ -6,15 +6,20 @@ Funcionalidade: Testes basicos no google
   Eu quero realizar uma busca
   De modo que obtenha resultados
 
-  Contexto: 
-    Dado que acesso a url "http://google.com"
-
-  @chrome
+  @CT01
   Esquema do Cenario: CT01_busca_google
-    Dado que digito o valor "<pesquisa>"
+    Dado que acesso o google pelo "<browser>"
+    E que digito o valor "<pesquisa>"
     Quando realizo a busca
     Entao apresenta a lista de resultados
 
+    @smoketest
     Cenarios: 
-      | pesquisa |
-      | Arnaldo  |
+      | browser | pesquisa |
+      | chrome  | Arnaldo  |
+
+    @regression
+    Cenarios: 
+      | browser | pesquisa |
+      | firefox | Thiago   |
+      | chrome  | Amanda   |
